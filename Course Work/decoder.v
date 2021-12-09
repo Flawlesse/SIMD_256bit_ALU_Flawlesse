@@ -35,7 +35,7 @@ module simd_decoder(
   // This block prevents all invalid
   // operations and converts them into
   // NOP if needed.
-  always @(*)
+  always @(inst)
     begin
       // if incorrect data mode set
       // or opcode is not yet defined

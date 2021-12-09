@@ -3,7 +3,7 @@
 `timescale 1ns/1ps
 
 module ALU_tb();
-  reg clk = 1;
+  reg clk = 0;
   reg rst = 0; // Disable reset for now
   
   parameter N = 5;
@@ -34,6 +34,10 @@ module ALU_tb();
   
   
   initial begin
+    // dump waves
+    $dumpfile("dump.vcd");
+    $dumpvars(1, ALU_tb);
+    
     // Fill testing dataset and implement monitor
     // #1 NOP
     INST[0] = 0;
@@ -216,17 +220,18 @@ module ALU_tb();
     EXP_OUT[28] = ;*/
     
     
-    $monitor("time=%g\nA =%b\nB =%b\nO =%b\nEO=%b\n OPCODE=%b, DM=%b, IMMF=%b, IMM_REG=%b\nTest result: %b\n\n", $time, in_A, in_B, OUT, exp_OUT, curr_inst[15:12], curr_inst[11:9], curr_inst[8], curr_inst[7:0], passed);
+    //$monitor("\ntime=%g\nA =%b\nB =%b\nO =%b\nEO=%b\n OPCODE=%b, DM=%b, IMMF=%b, IMM_REG=%b\nTest result: %b\n", $time, in_A, in_B, OUT, exp_OUT, curr_inst[15:12], curr_inst[11:9], curr_inst[8], curr_inst[7:0], passed);
   end
   
   
   
   always #500 clk <= ~clk;
   
-  always @(posedge clk) begin
+  // On negedge we write the data in
+  always @(negedge clk) begin
     // run tests
     if (i == N) begin
-      $display("Last test is fictional.");
+      #1
       $finish;
     end
       
@@ -235,6 +240,13 @@ module ALU_tb();
     in_B <= MEM_B[i];
     exp_OUT <= EXP_OUT[i];
     
-    i = i + 1;
+    i <= i + 1;
+  end
+  
+  // On posedge the ALU execution starts, so we wait a bit to synchronize
+  // the output for tests
+  always @(posedge clk) begin
+    #1
+    $display("Test no.%d\ntime=%g\nA =%b\nB =%b\nO =%b\nEO=%b\n OPCODE=%b, DM=%b, IMMF=%b, IMM_REG=%b\nTest result: %b\n", i, $time, in_A, in_B, OUT, exp_OUT, curr_inst[15:12], curr_inst[11:9], curr_inst[8], curr_inst[7:0], passed);
   end
 endmodule
