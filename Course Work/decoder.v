@@ -1,5 +1,5 @@
 // This module implements instruction decoder logic
-module decoder(
+module simd_decoder(
   input wire[15:0] inst,
   input wire clk,
   
@@ -28,13 +28,13 @@ module decoder(
     begin
       // if incorrect data mode set
       // or opcode is not yet defined
-      if (inst[15:12] > 4'b1001 || inst[11:9] > 3'b101)
+      if ((inst[15:12] > 4'b1001) | (inst[11:9] > 3'b101))
         begin
           // convert to NOP
-          opcode <= 4'b0000;
-          data_mode <= 3'b000;
-          imm_flag <= 1'b1;
-          imm <= {8{1'b0}};
+          opcode <= 0;
+          data_mode <= 0;
+          imm_flag <= 1;
+          imm <= 0;
         end
       else
         begin
