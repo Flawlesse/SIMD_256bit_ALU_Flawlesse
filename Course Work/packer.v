@@ -21,7 +21,7 @@ module simd_packer(
       0: begin // 8bit
         for (i=0; i < SIMD_WIDTH/(8*2); i=i+1) begin
           if (hi_flag) begin
-            res[(i+1)*8*2 - 1 -:8*2] <= {A[(i+8+1)*8 - 1 -:8], B[(i+8+1)*8 - 1 -:8]};
+            res[(i+1)*8*2 - 1 -:8*2] <= {A[(i+1)*8 + SIMD_WIDTH/2 - 1 -:8], B[(i+1)*8 + SIMD_WIDTH/2 - 1 -:8]};
           end else begin
             res[(i+1)*8*2 - 1 -:8*2] <= {A[(i+1)*8 - 1 -:8], B[(i+1)*8 - 1 -:8]};
           end
@@ -30,7 +30,7 @@ module simd_packer(
       1: begin // 16bit
         for (i=0; i < SIMD_WIDTH/(16*2); i=i+1) begin
           if (hi_flag) begin
-            res[(i+1)*16*2 - 1 -:16*2] <= {A[(i+16+1)*16 - 1 -:16], B[(i+16+1)*16 - 1 -:16]};
+            res[(i+1)*16*2 - 1 -:16*2] <= {A[(i+1)*16 + SIMD_WIDTH/2 - 1 -:16], B[(i+1)*16 + SIMD_WIDTH/2 - 1 -:16]};
           end else begin
             res[(i+1)*16*2 - 1 -:16*2] <= {A[(i+1)*16 - 1 -:16], B[(i+1)*16 - 1 -:16]};
           end
@@ -39,7 +39,7 @@ module simd_packer(
       2: begin // 32bit
         for (i=0; i < SIMD_WIDTH/(32*2); i=i+1) begin
           if (hi_flag) begin
-            res[(i+1)*32*2 - 1 -:32*2] <= {A[(i+32+1)*32 - 1 -:32], B[(i+32+1)*32 - 1 -:32]};
+            res[(i+1)*32*2 - 1 -:32*2] <= {A[(i+1)*32 + SIMD_WIDTH/2 - 1 -:32], B[(i+1)*32 + SIMD_WIDTH/2 - 1 -:32]};
           end else begin
             res[(i+1)*32*2 - 1 -:32*2] <= {A[(i+1)*32 - 1 -:32], B[(i+1)*32 - 1 -:32]};
           end
@@ -48,7 +48,7 @@ module simd_packer(
       3: begin // 64bit
         for (i=0; i < SIMD_WIDTH/(64*2); i=i+1) begin
           if (hi_flag) begin
-            res[(i+1)*64*2 - 1 -:64*2] <= {A[(i+64+1)*64 - 1 -:64], B[(i+64+1)*64 - 1 -:64]};
+            res[(i+1)*64*2 - 1 -:64*2] <= {A[(i+1)*64 + SIMD_WIDTH/2 - 1 -:64], B[(i+1)*64 + SIMD_WIDTH/2 - 1 -:64]};
           end else begin
             res[(i+1)*64*2 - 1 -:64*2] <= {A[(i+1)*64 - 1 -:64], B[(i+1)*64 - 1 -:64]};
           end
