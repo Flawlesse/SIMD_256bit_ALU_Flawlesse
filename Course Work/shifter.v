@@ -1,4 +1,6 @@
 // This module implements SLL, SRL, SRA
+`timescale 1ns/1ps
+
 module simd_shifter(
   input wire[255:0] A,
   input wire[255:0] B,

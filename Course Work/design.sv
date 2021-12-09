@@ -4,6 +4,7 @@
 `include "packer.v"
 `include "decoder.v"
 
+`timescale 1ns/1ps
 
 module SIMD_ALU(
   input wire[15:0] inst,
@@ -33,7 +34,6 @@ module SIMD_ALU(
   wire[7:0] imm;
   simd_decoder decoder(
     .inst(inst),
-    .clk(clk),
     
     .opcode(opcode),
     .data_mode(data_mode),
@@ -54,10 +54,10 @@ module SIMD_ALU(
   reg[255:0] B_reg;
   
   // Outputs from modules
-  reg[255:0] adder_res;
-  reg[255:0] shifter_res;
-  reg[255:0] comparator_res;
-  reg[255:0] packer_res;
+  wire[255:0] adder_res;
+  wire[255:0] shifter_res;
+  wire[255:0] comparator_res;
+  wire[255:0] packer_res;
   
   // General output
   reg[255:0] res;

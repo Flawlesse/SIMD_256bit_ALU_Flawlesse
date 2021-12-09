@@ -1,4 +1,6 @@
 // This module implements both CMPEQ and CMPGT
+`timescale 1ns/1ps
+
 module simd_comparator(
   input wire[255:0] A,
   input wire[255:0] B,
@@ -31,6 +33,7 @@ module simd_comparator(
           end else begin
             res[(i+1)*16 - 1 -:16] <= {16{( A[(i+1)*16 - 1 -:16] == B[(i+1)*16 - 1 -:16] )}};
           end
+        end
       end
       2: begin // 32bit
         for (i=0; i < SIMD_WIDTH/32; i=i+1) begin
@@ -39,6 +42,7 @@ module simd_comparator(
           end else begin
             res[(i+1)*32 - 1 -:32] <= {32{( A[(i+1)*32 - 1 -:32] == B[(i+1)*32 - 1 -:32] )}};
           end
+        end
       end
       3: begin // 64bit
         for (i=0; i < SIMD_WIDTH/64; i=i+1) begin
@@ -47,6 +51,7 @@ module simd_comparator(
           end else begin
             res[(i+1)*64 - 1 -:64] <= {64{( A[(i+1)*64 - 1 -:64] == B[(i+1)*64 - 1 -:64] )}};
           end
+        end
       end
       4: begin // 128bit
         for (i=0; i < SIMD_WIDTH/128; i=i+1) begin
@@ -55,6 +60,7 @@ module simd_comparator(
           end else begin
             res[(i+1)*128 - 1 -:128] <= {128{( A[(i+1)*128 - 1 -:128] == B[(i+1)*128 - 1 -:128] )}};
           end
+        end
       end
       default: begin // 256bit
         if (gt_flag) begin

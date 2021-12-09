@@ -1,4 +1,6 @@
 // This module implements both UNPCKGLO and UNPCKGHI
+`timescale 1ns/1ps
+
 module simd_packer(
   input wire[255:0] A,
   input wire[255:0] B,
